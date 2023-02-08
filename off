@@ -1,0 +1,2 @@
+#!/bin/sh
+tv && i3-msg workspace number 5  && vlc ~/.images/Goodnight

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo chown -R stan:stan /var/lib/sabnzbd/Downloads/complete/* && sudo mv /var/lib/sabnzbd/Downloads/complete/* /mnt/zfspools/tardis/usenet

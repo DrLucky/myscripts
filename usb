@@ -1,0 +1,105 @@
+#!/bin/bash
+
+preConnection=~/.preConnection.txt
+postConnection=~/.postConnection.txt
+#Save initial list of devices
+lsblk -o NAME,SIZE > $preConnection
+
+connected=0
+while [ $connected -ne 1 ]
+do
+    echo "connect block device, then press enter to continue"
+    read keyPress
+    case $keyPress in
+        *) connected=1;;
+    esac
+done
+
+echo "looking for new devices ."
+sleep 1
+echo "looking for new devices .."
+sleep 1
+echo "looking for new devices ..."
+sleep 1
+echo "looking for new devices ...."
+sleep 1
+echo -e "looking for new devices ..... \n"
+sleep 1
+
+# Save final list of devices
+lsblk -o NAME,SIZE > $postConnection
+
+# Compare the two files and print out new devices
+newBlockDeviceName=$(diff $preConnection $postConnection | grep '>' | head -n1 | cut -c 3-5)
+newBlockDeviceInfo=$(diff $preConnection $postConnection | grep '>' | head -n2 | cut -c 3-)
+echo -e "new device found:\n$newBlockDeviceInfo\n"
+
+# select partition number and confirm valid input
+integerCheck=0
+while [ $integerCheck -ne 1 ]
+do
+    echo "enter the partition number you wish to mount"
+    read partitionNumber
+    if [[ $partitionNumber =~ ^-?[0-9]+$ ]]
+    then 
+	    integerCheck=1
+    else
+        echo -e "make a valid selection\n"
+    fi
+done
+
+mountPartition=$newBlockDeviceName$partitionNumber
+echo -e "mounting $mountPartition \n"
+mountSelection=0
+while [ $mountSelection -ne 1 ]
+do
+    echo "where would you like to mount your device?"
+    echo "1 - /mnt/tempMount"
+    echo "2 - ~/USB"
+    echo "3 - custom path"
+
+    read pathSelection; 
+    case $pathSelection in
+	1) mountPath="/mnt/tempMount" && mountSelection=1;;
+        2) mountPath="/home/stan/USB" && mountSelection=1;;
+        3) echo -e "enter the path you would like to mount the block device on:\n" 
+           read customPath
+           mountPath="$customPath"
+           mountSelection=1;;
+        *) echo "please make a valid selection"
+    esac
+done
+
+echo -e "mounting at $mountPath\n"
+
+rwOptions=0
+while [ $rwOptions -ne 1 ]
+do 
+    echo "what filesystem is on $newBlockDeviceName$partitionNumber?"
+    echo "1 - exfat"
+    echo "2 - ext4"
+    echo "3 - fat32"
+    echo "4 - ntfs"
+    echo "5 - other/unknown"
+
+    read filesystemSelection;
+    case $filesystemSelection in
+        1) mountOptions="-o uid=1000,gid=1000,rw" && rwOptions=1;;
+        2) mountOptions="-o rw" && rwOptions=1;;
+        3) mountOptions="-o rw,umask=000" && rwOptions=1;;
+        4) mountOptions="-o rw,auto,user,fmask=0111,dmask=0000" && rwOptions=1;;
+        5) echo "block devices will be mounted without read/write permissions" && rwOptions=1;;
+        *) echo "please make a valid selection"
+    esac
+done
+
+fullCommand="sudo mount /dev/$mountPartition $mountPath $mountOptions"
+echo -e "do you wish to run :\n$fullCommand"
+
+read -p "(y/n)" yesNo
+if [ "$yesNo" == "y" ]
+then
+    exec $fullCommand
+else 
+    echo "exiting"
+fi

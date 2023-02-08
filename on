@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mainscreen && sleep 5 && all5

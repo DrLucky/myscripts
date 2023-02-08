@@ -1,0 +1,11 @@
+#!/bin/bash
+
+successLog=/home/stan/.locallogs/successLog.log
+failedLog=/home/stan/.locallogs/failedLog.log
+/usr/bin/rsync -ah --progress /mnt/sambaNAS/ /mnt/zfspools/tardis/homeMedia
+if [ $? -eq 0 ]
+then
+    echo "successful backup at $(/usr/bin/date)" >> $successLog
+else
+    echo "backup failed on $(/usr/bin/date)" >> $failedLog
+fi
