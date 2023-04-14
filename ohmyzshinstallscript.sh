@@ -14,5 +14,6 @@ wait $!
 echo "set -o vi" >> ~/.zshrc
 wait $!
 echo "export EDITOR=/usr/bin/vim" >> ~/.zshrc
-
-
+wait $!
+zshPath=$(which zsh)
+chsh -s $zshPath $USER
