@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Print the current title of each .mkv file
+echo "Current titles:"
+find . -type f -name "*.mkv" -exec sh -c 'echo "File: $1"; mkvinfo "$1" | grep -m 1 "Title"' _ {} \;
+
+echo "Updating titles..."
+
+# Update the title of each .mkv file to match its file name (without path or extension)
+find . -type f -name "*.mkv" -exec sh -c 'file="$1"; base=$(basename "$file" .mkv); mkvpropedit "$file" --set title="$base"' _ {} \;
+
+echo "Updated titles:"
+# Print the updated title of each .mkv file
+find . -type f -name "*.mkv" -exec sh -c 'echo "File: $1"; mkvinfo "$1" | grep -m 1 "Title"' _ {} \;
+

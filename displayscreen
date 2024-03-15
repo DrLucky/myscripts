@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#config file path:
+source /usr/local/bin/display_settings.conf
+
+#xrandr settings
+xrandr --output $Television --mode 1920x1080 --pos 2560x1080 --rotate normal \
+	   --output $LeftLG --mode 2560x1440 --pos 0x1080 --rotate normal \
+	   --output $RightLG --primary --mode 1920x1080 --pos 2560x1080 --rotate normal \
+	   --output $HUD --mode 1920x1080 --pos 2560x0 --rotate normal \
+	   --output $Vertical --mode 1920x1080 --pos 4480x600 --rotate left \
+	   --output $Standing --off \
+&&
+sleep 1 \
+&& feh --bg-fill ~/.images/orangeSpaceCatUp.jpg

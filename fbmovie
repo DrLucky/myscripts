@@ -1,0 +1,4 @@
+#!/bin/bash
+
+filebot -rename * --db TheMovieDB --format "{n} ({y})/{n} ({y})" --action move -non-strict
+

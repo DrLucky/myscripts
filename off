@@ -1,2 +1,4 @@
 #!/bin/sh
-tv && i3-msg workspace number 5  && vlc ~/.images/Goodnight
+tv && vlc ~/.images/Goodnight
+
+#tv && i3-msg workspace number 11 && feh -F ~/.images/Goodnight

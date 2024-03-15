@@ -12,16 +12,16 @@ echo "workspace \$ws6 output $HUD" >> ~/.config/i3/config
 echo "workspace \$ws7 output $Television" >> ~/.config/i3/config
 echo "workspace \$ws8 output $Vertical" >> ~/.config/i3/config
 echo "workspace \$ws9 output $Vertical" >> ~/.config/i3/config
-echo "workspace \$ws10 output $Standing" >> ~/.config/i3/config
+echo "workspace \$ws10 output $LeftLG" >> ~/.config/i3/config
 echo "workspace \$ws11 output $Vertical" >> ~/.config/i3/config
 i3-msg reload
 #xrandr settings
 xrandr --output $Television --mode 1920x1080 --pos 640x0 --rotate normal \
 	   --output $LeftLG --mode 2560x1440 --pos 0x1080 --rotate normal \
-	   --output $RightLG --primary --mode 2560x1440 --pos 2560x1080 --rotate normal \
-	   --output $HUD --mode 1920x1080 --pos 2880x0 --rotate normal \
-	   --output $Vertical --mode 1920x1080 --pos 5120x600 --rotate left \
-	   --output $Standing --mode 1920x1080 --pos 6200x1440 --rotate normal \
+	   --output $RightLG --primary --mode 1920x1080 --pos 2560x1080 --rotate normal \
+	   --output $HUD --mode 1920x1080 --pos 2560x0 --rotate normal \
+	   --output $Vertical --mode 1920x1080 --pos 4480x600 --rotate left \
+	   --output $Standing --mode 1920x1080 --pos 2560x1080 --rotate normal \
 &&
 sleep 1 \
 && feh --bg-fill ~/.images/orangeSpaceCatUp.jpg

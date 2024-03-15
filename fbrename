@@ -1,0 +1,4 @@
+#!/bin/bash
+
+find . -type f -exec filebot -rename {} --format "{n} - S{s.pad(2)}E{e.pad(2)} - {t}" -non-strict \;
+

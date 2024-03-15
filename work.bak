@@ -3,7 +3,7 @@
 #config file path:
 source /usr/local/bin/display_settings.conf
 
-#xrandr settings
+
 xrandr --output $Television --off \
 	   --output $LeftLG --primary --mode 2560x1440 --pos 0x0 --rotate normal \
 	   --output $RightLG --off \
@@ -11,5 +11,11 @@ xrandr --output $Television --off \
 	   --output $Vertical --off \
 	   --output $Standing --off \
 &&
+sleep 3 \
+&&
+xrandr --output $LeftLG --primary --mode 2560x1440 --pos 0x1080 --rotate normal \
+	   --output $Television --mode 1920x1080 --pos 640x0 --rotate normal \
+&&
 sleep 1 \
-&& feh --bg-fill ~/.images/orangeSpaceCatUp.jpg
+&&
+feh --bg-fill ~/.images/orangeSpaceCatUp.jpg
